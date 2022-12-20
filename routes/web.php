@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\DemoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +22,12 @@ Route::get('/demo', function () {
     return view('demo');
 });
 
+Route::get('/muiltiple-page', function () {
+    return view('muiltiple-page');
+});
+
+Route::get('/quiz', function () {
+    return view('quiz');
+});
+
+Route::post('postDemo', [DemoController::class, 'postDemo'])->name('user.postDemo');
