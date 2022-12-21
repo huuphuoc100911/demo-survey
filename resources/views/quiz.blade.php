@@ -15,126 +15,151 @@
 <body>
     <div id="surveyContainer"></div>
     <div id="resultsContainer" style="display:none;">
-        <p>Result JSON:</p>
         <code id="surveyResults" style="white-space:pre;"></code>
     </div>
 </body>
 <script>
     Survey.StylesManager.applyTheme("defaultV2");
 
-    // const surveyJson = {
-    //     title: "American History",
-    //     pages: [{
-    //         elements: [{
-    //             type: "radiogroup",
-    //             name: "civilwar",
-    //             title: "When was the American Civil War?",
-    //             choices: [
-    //                 "1796-1803", "1810-1814", "1861-1865", "1939-1945"
-    //             ],
-    //             correctAnswer: "1861-1865"
-    //         }]
-    //     }, {
-    //         elements: [{
-    //             type: "radiogroup",
-    //             name: "libertyordeath",
-    //             title: "Whose quote is this: \"Give me liberty, or give me death\"?",
-    //             choicesOrder: "random",
-    //             choices: [
-    //                 "John Hancock", "James Madison", "Patrick Henry", "Samuel Adams"
-    //             ],
-    //             correctAnswer: "Patrick Henry"
-    //         }]
-    //     }, {
-    //         elements: [{
-    //             type: "radiogroup",
-    //             name: "magnacarta",
-    //             title: "What is Magna Carta?",
-    //             choicesOrder: "random",
-    //             choices: [
-    //                 "The foundation of the British parliamentary system",
-    //                 "The Great Seal of the monarchs of England",
-    //                 "The French Declaration of the Rights of Man",
-    //                 "The charter signed by the Pilgrims on the Mayflower"
-    //             ],
-    //             correctAnswer: "The foundation of the British parliamentary system"
-    //         }]
-    //     }]
-    // };
-
     const surveyJson = {
-        title: "American History",
+        title: "Customer Feedback Survey",
         pages: [{
-            elements: [{
-                type: "radiogroup",
-                name: "civilwar",
-                title: "When was the American Civil War?",
-                choices: [
-                    "1796-1803", "1810-1814", "1861-1865", "1939-1945"
-                ],
-                correctAnswer: "1861-1865"
-            }]
-        }, {
-            elements: [{
-                type: "radiogroup",
-                name: "libertyordeath",
-                title: "Whose quote is this: \"Give me liberty, or give me death\"?",
-                choicesOrder: "random",
-                choices: [
-                    "John Hancock", "James Madison", "Patrick Henry", "Samuel Adams"
-                ],
-                correctAnswer: "Patrick Henry"
-            }]
-        }, {
-            elements: [{
-                type: "radiogroup",
-                name: "magnacarta",
-                title: "What is Magna Carta?",
-                choicesOrder: "random",
-                choices: [
-                    "The foundation of the British parliamentary system",
-                    "The Great Seal of the monarchs of England",
-                    "The French Declaration of the Rights of Man",
-                    "The charter signed by the Pilgrims on the Mayflower"
-                ],
-                correctAnswer: "The foundation of the British parliamentary system"
-            }]
-        }]
+                elements: [{
+                    type: "html",
+                    html: "<h2>In this survey, we will ask you a couple questions about your impressions of our product.</h2>"
+                }]
+            }, {
+                elements: [{
+                    name: "satisfaction-score",
+                    title: "How would you describe your experience with our product?",
+                    type: "radiogroup",
+                    choices: [{
+                            value: 5,
+                            text: "やあ"
+                        },
+                        {
+                            value: 4,
+                            text: "それは"
+                        },
+                        {
+                            value: 3,
+                            text: "何です"
+                        },
+                        {
+                            value: 2,
+                            text: "それは"
+                        },
+                        {
+                            value: 1,
+                            text: "ものは"
+                        }
+                    ],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                }]
+            }, {
+                elements: [{
+                    "name": "datetime-local",
+                    "type": "text",
+                    "title": "Select a date and time",
+                    "inputType": "datetime-local",
+                    "defaultValueExpression": "currentDate()",
+                    isRequired: true,
+                }]
+            }, {
+                elements: [{
+                    name: "what-would-make-you-more-satisfied",
+                    title: "What can we do to make your experience more satisfying?",
+                    type: "radiogroup",
+                    choices: [{
+                            value: 5,
+                            text: "やあ"
+                        },
+                        {
+                            value: 4,
+                            text: "それは"
+                        },
+                        {
+                            value: 3,
+                            text: "何です"
+                        },
+                        {
+                            value: 2,
+                            text: "それは"
+                        },
+                        {
+                            value: 1,
+                            text: "ものは"
+                        }
+                    ],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                }],
+            }, {
+                "elements": [{
+                    "type": "dropdown",
+                    "name": "car",
+                    "title": "Which is the brand of your car?",
+                    "isRequired": true,
+                    "showNoneItem": false,
+                    "showOtherItem": false,
+                    "choices": ["Ford", "Vauxhall", "Volkswagen", "Nissan", "Audi", "Mercedes-Benz",
+                        "BMW", "Peugeot", "Toyota", "Citroen"
+                    ]
+                }],
+                "showQuestionNumbers": false
+            }, {
+                "title": "What operating system do you use?",
+                "elements": [{
+                    "type": "checkbox",
+                    "name": "opSystem",
+                    "title": "OS",
+                    "showOtherItem": false,
+                    "isRequired": true,
+                    "choices": ["Windows", "Linux", "Macintosh OSX"]
+                }]
+            },
+            {
+                "elements": [{
+                    "type": "comment",
+                    "name": "pricelimit",
+                    "title": "What is the... ",
+                    isRequired: true,
+                }],
+            },
+        ],
+        showQuestionNumbers: "off",
+        pagePrevText: "Back",
+        pageNextText: "Next",
+        completeText: "Submit",
+        showPrevButton: true,
+        firstPageIsStarted: true,
+        startSurveyText: "Take the Survey",
+        completedHtml: "Thank you for your feedback!",
+        surveyId: '4aa953e5-2f7e-4474-8cf7-35a95a1ea590',
+        surveyPostId: "449ec3f5-c4fa-41c2-b7af-2d792c08cff4",
+        surveyShowDataSaving: true
+        showPreviewBeforeComplete: "showAnsweredQuestions"
     };
 
-
-
-
     const survey = new Survey.Model(surveyJson);
+    survey.locale = "ja";
 
     survey.start();
 
-    survey.startTimer();
-    survey.stopTimer();
-
     function displayResults(sender) {
         const results = JSON.stringify(sender.data, null, 4);
-        console.log(results);
-        document.querySelector("#surveyResults").textContent = results;
-        document.querySelector("#resultsContainer").style.display = "block";
-        $.ajax({
-            url: "{{ route('user.postDemo') }}",
-            method: 'POST',
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "inputs": results
-            },
-            success: function(response) {
-                console.log(response);
-            }
-        });
+        alert('Khao sat thanh cong');
+        // document.querySelector("#surveyResults").textContent = results;
+        // document.querySelector("#resultsContainer").style.display = "block";
     }
 
     survey.onComplete.add(displayResults);
 
     $(function() {
-        $("#surveyContainer").Survey({
-            model: survey
+        $("#surveyContainer").PopupSurvey({
+            model: survey,
+            isExpanded: true
         });
     });
 </script>
