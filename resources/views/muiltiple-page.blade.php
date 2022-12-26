@@ -53,114 +53,229 @@
             onchange="window.navSurvey.currentPageNo = this.value"></select>
     </div>
     <div id="surveyElement"></div>
+    <div id="surveyContainer"></div>
+    <div id="resultsContainer" style="display:none;">
+        <code id="surveyResults" style="white-space:pre;"></code>
+    </div>
 </body>
+<link href="https://unpkg.com/survey-jquery/defaultV2.min.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/survey-jquery"></script>
+<script type="text/javascript" src="/js/common.js"></script>
 <script>
     Survey.StylesManager.applyTheme("defaultV2");
 
-    const json = {
-        title: "Software developer survey.",
+    var keyword = 1;
+
+    const surveyJson = {
+        title: "Customer Feedback Survey",
         pages: [{
+                "elements": [{
+                    "type": "html",
+                    "name": "",
+                    "html": ""
+                }]
+            }, {
+                elements: [{
+                    type: "html",
+                    name: "introduce",
+                    html: "<h2>In this survey, we will ask you a couple questions about your impressions of our product.</h2>"
+                }]
+            }, {
+                elements: [{
+                    name: "satisfaction-score",
+                    title: "How would you describe your experience with our product?",
+                    type: "radiogroup",
+                    choices: [{
+                            value: "やあ",
+                            text: "やあ"
+                        },
+                        {
+                            value: "それは",
+                            text: "それは"
+                        },
+                        {
+                            value: "何です",
+                            text: "何です"
+                        },
+                        {
+                            value: "ログイン",
+                            text: "ログイン"
+                        },
+                        {
+                            value: "ものは",
+                            text: "ものは"
+                        }
+                    ],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                    visibleIf: "{keyword} == 1"
+                }]
+            }, {
+                elements: [{
+                    "name": "date",
+                    "type": "text",
+                    "title": "Select a date and time",
+                    "inputType": "date",
+                    "defaultValueExpression": "currentDate()",
+                    "dateFormat": "mm/dd/yy",
+                    isRequired: true,
+                }]
+            }, {
+                elements: [{
+                    name: "what-would-make-you-more-satisfied",
+                    title: "What can we do to make your experience more satisfying?",
+                    type: "radiogroup",
+                    choices: [{
+                            value: 'Laravel',
+                            text: "Laravel"
+                        },
+                        {
+                            value: "Vibrant",
+                            text: "Vibrant"
+                        },
+                        {
+                            value: "HUUPHUOC",
+                            text: "HUUPHUOC"
+                        },
+                        {
+                            value: "libraries",
+                            text: "libraries"
+                        },
+                        {
+                            value: "package",
+                            text: "package"
+                        }
+                    ],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                }],
+            }, {
+                "elements": [{
+                    "type": "dropdown",
+                    "name": "car",
+                    "title": "Which is the brand of your car?",
+                    "isRequired": true,
+                    "showNoneItem": false,
+                    "showOtherItem": false,
+                    "choices": ["Ford", "Vauxhall", "Volkswagen", "Nissan", "Audi", "Mercedes-Benz",
+                        "BMW", "Peugeot", "Toyota", "Citroen"
+                    ]
+                }],
+                "showQuestionNumbers": false
+            }, {
                 "title": "What operating system do you use?",
                 "elements": [{
                     "type": "checkbox",
                     "name": "opSystem",
                     "title": "OS",
-                    "showOtherItem": true,
+                    "showOtherItem": false,
                     "isRequired": true,
-                    "choices": ["Windows", "Linux", "Macintosh OSX"]
+                    "choices": ["Windows", "Linux", "Macintosh OSX", "Android", "IOS"]
                 }]
             },
             {
-                "title": "What language(s) are you currently using?",
                 "elements": [{
-                    "type": "checkbox",
-                    "name": "langs",
-                    "title": "Please select from the list",
-                    "colCount": 4,
-                    "isRequired": true,
-                    "choices": [
-                        "Javascript",
-                        "Java",
-                        "Python",
-                        "CSS",
-                        "PHP",
-                        "Ruby",
-                        "C++",
-                        "C",
-                        "Shell",
-                        "C#",
-                        "Objective-C",
-                        "R",
-                        "VimL",
-                        "Go",
-                        "Perl",
-                        "CoffeeScript",
-                        "TeX",
-                        "Swift",
-                        "Scala",
-                        "Emacs Lisp",
-                        "Haskell",
-                        "Lua",
-                        "Clojure",
-                        "Matlab",
-                        "Arduino",
-                        "Makefile",
-                        "Groovy",
-                        "Puppet",
-                        "Rust",
-                        "PowerShell"
-                    ]
+                    "type": "comment",
+                    "name": "pricelimit",
+                    "title": "What is your favorite?",
+                    isRequired: true,
+                }],
+            }, {
+                elements: [{
+                    "name": "phone",
+                    "type": "text",
+                    "title": "Enter a phone number",
+                    "inputType": "tel",
+                    "placeholder": "+84357789210",
+                    "autocomplete": "tel",
+                    "validators": [{
+                        "type": "regex",
+                        // "regex": "^(0|84)[0-9]{9}",
+                        "regex": "\\+[84]{1}[0-9]{10}",
+                        "text": "Phone number must be in the following format: +84123456789"
+                    }],
+                    isRequired: true,
                 }]
-            },
-            {
-                "title": "Please enter your name and e-mail",
+            }, {
                 "elements": [{
-                        "type": "text",
-                        "name": "name",
-                        "title": "Name:"
-                    },
-                    {
-                        "type": "text",
-                        "name": "email",
-                        "title": "Your e-mail"
-                    }
-                ]
+                    "name": "wallet",
+                    "type": "text",
+                    "title": "Wallet",
+                    "placeholder": "0x00000000000",
+                    "validators": [{
+                        "type": "regex",
+                        "regex": "^([0x]{1})",
+                        "text": "Please enter your wallet address"
+                    }],
+                    isRequired: true,
+                }],
+            }, {
+                "elements": [{
+                    "type": "html",
+                    "name": "info",
+                    "html": "<table><body><row><td><img src='/images/tick.png' width='100px' /></td><td style='padding:20px'>Thank you for your feedback!</td></row></body></table>"
+                }]
             }
-        ]
+        ],
+        showQuestionNumbers: "on",
+        pagePrevText: "Back",
+        pageNextText: "Next",
+        completeText: "Complete",
+        showPrevButton: true,
+        firstPageIsStarted: true,
+        startSurveyText: "Take the Survey",
+        completedHtml: "Thank you for your feedback!",
+        surveyId: '4aa953e5-2f7e-4474-8cf7-35a95a1ea590',
+        surveyPostId: "449ec3f5-c4fa-41c2-b7af-2d792c08cff4",
+        surveyShowDataSaving: true,
+        showProgressBar: "bottom",
+        goNextPageAutomatic: false,
+        showNavigationButtons: true,
     };
 
-    function doOnCurrentPageChanged(survey) {
-        var survey = window.navSurvey;
-        document.getElementById('pageSelector').value = survey.currentPageNo;
-        document.getElementById('surveyPrev').style.display = !survey.isFirstPage ? "inline" : "none";
-        document.getElementById('surveyNext').style.display = !survey.isLastPage ? "inline" : "none";
-        document.getElementById('surveyComplete').style.display = survey.isLastPage ? "inline" : "none";
-        document.getElementById('surveyProgress').innerText = "Page " + (survey.currentPageNo + 1) + " of " + survey
-            .visiblePageCount + ".";
-        if (document.getElementById('surveyPageNo')) document.getElementById('surveyPageNo').value = survey
-            .currentPageNo;
+    const survey = new Survey.Model(surveyJson);
+    // survey.locale = "ja";
+
+    survey.start();
+
+    function displayResults(sender) {
+        const results = JSON.stringify(sender.data, null, 4);
+        document.querySelector("#surveyResults").textContent = results;
+        document.querySelector("#resultsContainer").style.display = "block";
+        console.log(results);
     }
 
-    function setupPageSelector(survey) {
-        console.log(survey);
-        window.navSurvey = survey;
-        var selector = document.getElementById('pageSelector');
-        for (var i = 0; i < survey.visiblePages.length; i++) {
-            var option = document.createElement("option");
-            option.value = i;
-            option.text = "Page " + (i + 1);
-            selector.add(option);
-        }
-    }
-    const survey = new Survey.Model(json);
-    survey.showTitle = false;
-    setupPageSelector(survey);
-    doOnCurrentPageChanged(survey);
-    survey.showTitle = false;
+    const SURVEY_ID = '4aa953e5-2f7e-4474-8cf7-35a95a1ea590';
 
-    $("#surveyElement").Survey({
-        model: survey,
-        onCurrentPageChanged: doOnCurrentPageChanged
+    function surveyComplete(sender) {
+        saveSurveyResults(
+            "https://your-web-service.com/" + SURVEY_ID,
+            sender.data
+        )
+    }
+
+    function saveSurveyResults(url, json) {
+        const request = new XMLHttpRequest();
+        request.open('POST', url);
+        request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        request.addEventListener('load', () => {
+            // Handle "load"
+        });
+        request.addEventListener('error', () => {
+            // Handle "error"
+        });
+        request.send(JSON.stringify(json));
+    }
+
+    survey.onComplete.add(displayResults);
+
+    $(function() {
+        $("#surveyContainer").PopupSurvey({
+            model: survey,
+            isExpanded: true
+        });
     });
 </script>
 

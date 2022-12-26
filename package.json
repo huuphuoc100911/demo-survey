@@ -19,6 +19,7 @@
         "jquery": "^3.6.3",
         "jquery-ui-dist": "^1.13.2",
         "survey-jquery": "^1.9.64",
+        "survey-pdf": "^1.9.65",
         "surveyjs-widgets": "^1.9.65"
     }
 }
