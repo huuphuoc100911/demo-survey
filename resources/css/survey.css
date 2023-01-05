@@ -1,0 +1,96 @@
+:root {
+    --background-primary-color: #75c5f6;
+}
+
+.sv_window {
+    max-width: 30% !important;
+}
+
+.sd-selectbase__item {
+    border: 1px solid var(--background-primary-color);
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+
+.sd-selectbase__item:active {
+    border: 1px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+    margin-bottom: 5px;
+}
+
+.sd-selectbase__label {
+    padding-left: 8px;
+}
+
+.sd-item:hover .sd-radio--checked {
+    border: 4px solid var(--background-primary-color);
+}
+
+.sd-item__decorator.sd-radio__decorator {
+    box-shadow: 0 0 0 2px var(--background-primary-color);
+    outline: none;
+}
+
+.sd-item__decorator.sd-radio__decorator:hover {
+    box-shadow: 0 0 0 2px var(--background-primary-color) !important;
+    outline: none;
+}
+
+.sd-navigation__complete-btn {
+    background: white !important;
+}
+
+.sd-item--checked .sd-item__decorator {
+    background: var(--background-primary-color) !important;
+}
+
+.sd-item--checked:hover .sd-item__decorator:hover {
+    background: var(--background-primary-color) !important;
+}
+
+.sd-progress__bar {
+    background-color: var(--background-primary-color) !important;
+}
+
+.sd-btn {
+    color: var(--background-primary-color) !important;
+}
+
+.sd-btn:not(:disabled):hover,
+.sd-btn:not(:disabled):focus {
+    box-shadow: 0 0 0 2px var(--background-primary-color) !important;
+}
+
+.sd-input.sd-text {
+    border: 2px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+}
+
+.sd-input.sd-text.active {
+    border: 2px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+}
+
+.sd-question__content {
+    border-style: none !important;
+}
+
+.sd-comment:focus {
+    border: 10px solid var(--background-primary-color) !important;
+}
+
+.sd-input.sd-dropdown.sd-dropdown--empty {
+    border: 2px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+}
+
+.sd-input.sd-dropdown {
+    border: 2px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+}
+
+.sd-input.sd-comment {
+    border: 2px solid var(--background-primary-color) !important;
+    border-radius: 15px;
+}

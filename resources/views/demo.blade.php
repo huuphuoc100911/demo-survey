@@ -5,6 +5,7 @@
     <title>SurveyJS for jQuery - Multi-Page Survey</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="/css/app.css" type="text/css" rel="stylesheet">
 
     <!-- Styles -->
     <style>
@@ -391,107 +392,6 @@
                 color: rgba(107, 114, 128, var(--tw-text-opacity))
             }
         }
-
-        :root {
-            --background-primary-color: #75c5f6;
-        }
-
-        .sv_window {
-            max-width: 30% !important;
-        }
-
-        .sd-selectbase__item {
-            border: 1px solid var(--background-primary-color);
-            border-radius: 15px;
-            margin-bottom: 5px;
-        }
-
-        /* .sd-item__control-label:hover {
-            color: red;
-                background: red;
-        } */
-
-        .sd-selectbase__item:active {
-            border: 1px solid var(--background-primary-color);
-            border-radius: 15px;
-            margin-bottom: 5px;
-        }
-
-        /* .sd-radio--allowhover {
-            background: var(--background-primary-color) !important;
-        } */
-
-        .sd-selectbase__label {
-            padding-left: 8px;
-        }
-
-        .sd-item__decorator.sd-radio__decorator {
-            box-shadow: 0 0 0 2px var(--background-primary-color);
-            outline: none;
-        }
-
-        .sd-item__decorator.sd-radio__decorator:hover {
-            box-shadow: 0 0 0 2px var(--background-primary-color) !important;
-            outline: none;
-        }
-
-        .sd-navigation__complete-btn {
-            background: white !important;
-        }
-
-        .sd-item--checked .sd-item__decorator {
-            background: var(--background-primary-color) !important;
-        }
-
-        .sd-item--checked:hover .sd-item__decorator:hover {
-            background: var(--background-primary-color) !important;
-        }
-
-        .sd-progress__bar {
-            background-color: var(--background-primary-color) !important;
-        }
-
-        .sd-btn {
-            color: var(--background-primary-color) !important;
-        }
-
-        .sd-btn:not(:disabled):hover,
-        .sd-btn:not(:disabled):focus {
-            box-shadow: 0 0 0 2px var(--background-primary-color) !important;
-        }
-
-        .sd-input.sd-text {
-            border: 2px solid var(--background-primary-color) !important;
-            border-radius: 15px;
-        }
-
-        .sd-input.sd-text.active {
-            border: 2px solid var(--background-primary-color) !important;
-            border-radius: 15px;
-        }
-
-        .sd-question__content {
-            border-style: none !important;
-        }
-
-        .sd-comment:focus {
-            border: 10px solid var(--background-primary-color) !important;
-        }
-
-        .sd-input.sd-dropdown.sd-dropdown--empty {
-            border: 2px solid var(--background-primary-color) !important;
-            border-radius: 15px;
-        }
-
-        .sd-input.sd-dropdown {
-            border: 2px solid var(--background-primary-color) !important;
-            border-radius: 15px;
-        }
-
-        .sd-input.sd-comment {
-            border: 2px solid var(--background-primary-color) !important;
-            border-radius: 15px;
-        }
     </style>
 </head>
 
@@ -604,7 +504,7 @@
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                <p style="color: red">HUUPHUOC</p>Laravel's robust library of first-party tools and
+                                Laravel's robust library of first-party tools and
                                 libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a
                                     href="https://vapor.laravel.com" class="underline">Vapor</a>, <a
                                     href="https://nova.laravel.com" class="underline">Nova</a>, and <a
@@ -657,16 +557,32 @@
         </div>
     </div>
     <div id="surveyContainer"></div>
+    <form id="surveyContainerSubmit" method="post" action="{{ route('user.postDemo') }}"></form>
     <div id="resultsContainer" style="display:none;">
         <code id="surveyResults" style="white-space:pre;"></code>
     </div>
 </body>
 <link href="https://unpkg.com/survey-jquery/defaultV2.min.css" type="text/css" rel="stylesheet">
+<link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
+<link href="/css/survey.css" type="text/css" rel="stylesheet">
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/survey-jquery"></script>
 <script type="text/javascript" src="/js/common.js"></script>
+<script src="https://unpkg.com/jspsych@7.0.0" type="text/javascript"></script>
+<script src="https://unpkg.com/@jspsych/plugin-image-keyboard-response@1.0.0" type="text/javascript"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
+<script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
 <script>
+    $(function() {
+        $("#surveyContainer").PopupSurvey({
+            model: survey,
+            isExpanded: true
+        });
+    });
+
     Survey.StylesManager.applyTheme("defaultV2");
 
     var keyword = 'dtqg';
@@ -680,173 +596,175 @@
     }
 
     const surveyJson = {
-        title: "Customer Feedback Survey",
+        title: "Customer Feedback Survey Hello",
         pages: [{
-            elements: [{
-                type: "html",
-                name: "",
-                html: ""
-            }]
-        }, {
-            elements: [{
-                type: "html",
-                name: "introduce",
-                html: "<h2>In this survey, we will ask you a couple questions about your impressions of our product.</h2>"
-            }]
-        }, {
-            elements: [{
-                name: "topic",
-                title: "Topics you want to survey?",
-                type: "radiogroup",
-                choices: arr,
-                isRequired: true,
-                requiredErrorText: "Value cannot be empty",
-            }]
-        }, {
-            elements: [{
-                name: "date",
-                type: "text",
-                title: "Select survey date",
-                inputType: "date",
-                defaultValueExpression: "currentDate()",
-                dateFormat: "mm/dd/yy",
-                isRequired: true,
-            }]
-        }, {
-            elements: [{
-                name: "dtqg",
-                title: "Which team will win the 2022 World Cup?",
-                type: "radiogroup",
-                choices: ["Brazil", "Argentina", "Spain", "France", "Germany", "England"],
-                isRequired: true,
-                requiredErrorText: "Value cannot be empty",
-                visibleIf: "{topic}='Sport'",
-            }]
-        }, {
-            elements: [{
-                name: "clb",
-                title: "Which club will win the Champions League 2023?",
-                type: "radiogroup",
-                choices: ["PSG", "ManCity", "Real Madrid", "Liverpool", "Bayer Munich"],
-                isRequired: true,
-                requiredErrorText: "Value cannot be empty",
-                visibleIf: "{topic}='Sport'",
-            }]
-        }, {
-            title: "Who is your favorite player?",
-            elements: [{
-                type: "checkbox",
-                name: "player",
-                title: "Football player",
-                showOtherItem: false,
-                isRequired: true,
-                choices: ["Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Neymar",
-                    "Andres Iniesta"
-                ],
-                visibleIf: "{topic}='Sport'",
-            }]
-        }, {
-            elements: [{
-                name: "travel_where",
-                title: "Where do you want to travel?",
-                type: "radiogroup",
-                choices: ['Huế', 'Đà Nẵng', 'Hà Nội', 'Sài Gòn'],
-                isRequired: true,
-                requiredErrorText: "Value cannot be empty",
-                visibleIf: "{topic}='Travel'",
-            }],
-        }, {
-            elements: [{
-                type: "dropdown",
-                name: "transport",
-                title: "What is your means of transportation?",
-                isRequired: true,
-                showNoneItem: false,
-                showOtherItem: false,
-                choices: ["Ford", "Vauxhall", "Volkswagen", "Nissan", "Audi", "Mercedes-Benz",
-                    "BMW", "Peugeot", "Toyota", "Citroen"
-                ]
-            }],
-            showQuestionNumbers: false
-        }, {
-            title: "What is the place you want to go to?",
-            elements: [{
-                type: "checkbox",
-                name: "place",
-                title: "Place",
-                showOtherItem: false,
-                isRequired: true,
-                choices: ["City", "Cathedral", "Mausoleum", "Mountain", "Sea"],
-                visibleIf: "{topic}='Travel'",
-            }]
-        }, {
-            title: "What is your favorite topic?",
-            elements: [{
-                type: "checkbox",
-                name: "blog_topic",
-                title: "Blog theme",
-                showOtherItem: true,
-                isRequired: true,
-                choices: ["Book", "Animal", "Travel", "Sport"],
-                visibleIf: "{topic}='Blog'",
-            }]
-        }, {
-            elements: [{
-                name: "blog_howlong",
-                title: "Where do you want to travel?",
-                type: "radiogroup",
-                choices: ['1-3h', '3-5h', '5-7h', '>7h'],
-                isRequired: true,
-                requiredErrorText: "Value cannot be empty",
-                visibleIf: "{topic}='Blog'",
-            }],
-        }, {
-            elements: [{
-                type: "comment",
-                name: "pricelimit",
-                title: "What is your favorite?",
-                isRequired: true,
-            }],
-        }, {
-            elements: [{
-                name: "phone",
-                type: "text",
-                title: "Enter a phone number",
-                inputType: "tel",
-                placeholder: "+84357789210",
-                autocomplete: "tel",
-                validators: [{
-                    type: "regex",
-                    // "regex": "^(0|84)[0-9]{9}",
-                    regex: "\\+[84]{1}[0-9]{10}",
-                    text: "Phone number must be in the following format: +84123456789"
+                elements: [{
+                    type: "html",
+                    name: "",
+                    html: ""
+                }]
+            }, {
+                elements: [{
+                    type: "html",
+                    name: "introduce",
+                    html: "<h2>In this survey, we will ask you a couple questions about your impressions of our product.</h2>"
+                }]
+            }, {
+                elements: [{
+                    name: "topic",
+                    title: "Topics you want to survey?",
+                    type: "radiogroup",
+                    choices: arr,
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                }]
+            }, {
+                elements: [{
+                    name: "date",
+                    type: "text",
+                    title: "Select survey date",
+                    inputType: "date",
+                    defaultValueExpression: "currentDate()",
+                    dateFormat: "mm/dd/yy",
+                    isRequired: true,
+                }]
+            }, {
+                elements: [{
+                    name: "dtqg",
+                    title: "Which team will win the 2022 World Cup?",
+                    type: "radiogroup",
+                    choices: ["Brazil", "Argentina", "Spain", "France", "Germany", "England"],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                    visibleIf: "{topic}={Sport}",
+                }]
+            }, {
+                elements: [{
+                    name: "clb",
+                    title: "Which club will win the Champions League 2023?",
+                    type: "radiogroup",
+                    choices: ["PSG", "ManCity", "Real Madrid", "Liverpool", "Bayer Munich"],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                    visibleIf: "{topic}='Sport'",
+                }]
+            }, {
+                title: "Who is your favorite player?",
+                elements: [{
+                    type: "checkbox",
+                    name: "player",
+                    title: "Football player",
+                    showOtherItem: false,
+                    isRequired: true,
+                    choices: ["Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Neymar",
+                        "Andres Iniesta"
+                    ],
+                    visibleIf: "{topic}='Sport'",
+                }]
+            }, {
+                elements: [{
+                    name: "travel_where",
+                    title: "Where do you want to travel?",
+                    type: "radiogroup",
+                    choices: ['Huế', 'Đà Nẵng', 'Hà Nội', 'Sài Gòn'],
+                    isRequired: true,
+                    requiredErrorText: "Value cannot be empty",
+                    visibleIf: "{topic}='Travel'",
                 }],
-                isRequired: true,
-            }]
-        }, {
-            elements: [{
-                name: "wallet",
-                type: "text",
-                title: "Wallet",
-                placeholder: "0x00000000000",
-                validators: [{
-                    type: "regex",
-                    regex: "^([0x]{1})",
-                    text: "Your wallet address must be in the following format: 0xabc12312132"
-                }],
-                isRequired: true,
-            }],
-        }, {
-            elements: [{
-                type: "html",
-                name: "info",
-                html: "<table style='margin: 0px auto'><body><row><td><img src='/images/tick.png' width='100px' /></td><td style='padding:20px'>Thank you for your feedback!</td></row></body></table>"
-            }]
-        }],
+            }
+            // , {
+            //     elements: [{
+            //         type: "dropdown",
+            //         name: "transport",
+            //         title: "What is your means of transportation?",
+            //         isRequired: true,
+            //         showNoneItem: false,
+            //         showOtherItem: false,
+            //         choices: ["Ford", "Vauxhall", "Volkswagen", "Nissan", "Audi", "Mercedes-Benz",
+            //             "BMW", "Peugeot", "Toyota", "Citroen"
+            //         ]
+            //     }],
+            //     showQuestionNumbers: false
+            // }, {
+            //     title: "What is the place you want to go to?",
+            //     elements: [{
+            //         type: "checkbox",
+            //         name: "place",
+            //         title: "Place",
+            //         showOtherItem: false,
+            //         isRequired: true,
+            //         choices: ["City", "Cathedral", "Mausoleum", "Mountain", "Sea"],
+            //         visibleIf: "{topic}='Travel'",
+            //     }]
+            // }, {
+            //     title: "What is your favorite topic?",
+            //     elements: [{
+            //         type: "checkbox",
+            //         name: "blog_topic",
+            //         title: "Blog theme",
+            //         showOtherItem: true,
+            //         isRequired: true,
+            //         choices: ["Book", "Animal", "Travel", "Sport"],
+            //         visibleIf: "{topic}='Blog'",
+            //     }]
+            // }, {
+            //     elements: [{
+            //         name: "blog_howlong",
+            //         title: "Where do you want to travel?",
+            //         type: "radiogroup",
+            //         choices: ['1-3h', '3-5h', '5-7h', '>7h'],
+            //         isRequired: true,
+            //         requiredErrorText: "Value cannot be empty",
+            //         visibleIf: "{topic}='Blog'",
+            //     }],
+            // }, {
+            //     elements: [{
+            //         type: "comment",
+            //         name: "pricelimit",
+            //         title: "What is your favorite?",
+            //         isRequired: true,
+            //     }],
+            // }, {
+            //     elements: [{
+            //         name: "phone",
+            //         type: "text",
+            //         title: "Enter a phone number",
+            //         inputType: "tel",
+            //         placeholder: "+84357789210",
+            //         autocomplete: "tel",
+            //         validators: [{
+            //             type: "regex",
+            //             regex: "\\+[84]{1}[0-9]{10}",
+            //             text: "Phone number must be in the following format: +84123456789"
+            //         }],
+            //         isRequired: true,
+            //     }]
+            // }, {
+            //     elements: [{
+            //         name: "wallet",
+            //         type: "text",
+            //         title: "Wallet",
+            //         placeholder: "0x00000000000",
+            //         validators: [{
+            //             type: "regex",
+            //             regex: "^([0x]{1})",
+            //             text: "Your wallet address must be in the following format: 0xabc12312132"
+            //         }],
+            //         isRequired: true,
+            //     }],
+            // }
+            , {
+                elements: [{
+                    type: "html",
+                    name: "info",
+                    html: "<table style='margin: 0px auto'><body><row><td><img src='/images/tick.png' width='100px' /></td><td style='padding:20px'>Gửi SMS!</td></row></body></table>"
+                }]
+            }
+        ],
         showQuestionNumbers: "on",
         pagePrevText: "Back",
         pageNextText: "Next",
-        completeText: "Complete",
+        completeText: "Gửi SMS",
         showPrevButton: true,
         firstPageIsStarted: true,
         startSurveyText: "Take the Survey",
@@ -859,8 +777,62 @@
         showNavigationButtons: true,
     };
 
+    const surveyJsonSubmit = {
+        title: "Customer Feedback Survey Hello",
+        pages: [{
+                elements: [{
+                    type: "comment",
+                    name: "pricelimitaaa",
+                    title: "What is your favorite?",
+                    isRequired: true,
+                }]
+            }, {
+                elements: [{
+                    type: "html",
+                    name: "input-tests",
+                    html: `<body>
+                            <div class='row text-center'>
+                                <h3 style='color:red'>Nhap SMS</h3>
+                            </div><br/>
+                            <div class='mt-5 row text-center'>
+                                <form>
+                                    @csrf
+                                    <input type='text' id='number_1' name='number_1' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                    <input type='text' id='number_2' name='number_2' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                    <input type='text' id='number_3' name='number_3' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                    <input type='text' id='number_4' name='number_4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                    <input type='submit' style='width:15%; height: 75px; border: 1px solid #75c5f6; border-radius: 8px' class='btn btn-success inputs col-2 mr-2 text-center'/>
+                                </form>
+                            </div>
+                        </body>`
+                }]
+            },
+            // {
+            //     elements: [{
+            //         type: "html",
+            //         name: "info",
+            //         html: "<table style='margin: 0px auto'><body><row><td><img src='/images/tick.png' width='100px' /></td><td style='padding:20px'>Thank you for your feedback!</td></row></body></table>"
+            //     }]
+            // }
+        ],
+        showQuestionNumbers: "on",
+        pagePrevText: "Back",
+        pageNextText: "Next",
+        completeText: "Complete",
+        showPrevButton: true,
+        firstPageIsStarted: true,
+        startSurveyText: "Submit",
+        completedHtml: "Thank you for your feedback!",
+        surveyShowDataSaving: true,
+        showProgressBar: "bottom",
+        goNextPageAutomatic: false,
+        showNavigationButtons: true,
+    };
+
     const survey = new Survey.Model(surveyJson);
-    // survey.locale = "ja";
+    const surveySubmit = new Survey.Model(surveyJsonSubmit);
+
+    survey.locale = "ja";
 
     survey.start();
 
@@ -868,19 +840,70 @@
         const results = JSON.stringify(sender.data, null, 4);
         document.querySelector("#surveyResults").textContent = results;
         document.querySelector("#resultsContainer").style.display = "block";
-        console.log(results);
+
+        var jsPsych = initJsPsych();
+        var jsPsychInput = initJsPsych();
+
+        // var start = {
+        //     type: jsPsychHtmlButtonResponse,
+        //     stimulus: '',
+        //     choices: ['Nhap SMS']
+        // };
+
+        var show_data = {
+            type: jsPsychHtmlButtonResponse,
+            stimulus: function() {
+                var trial_data = jsPsych.data.getLastTrialData().values();
+                var trial_json = JSON.stringify(trial_data, null, 2);
+                return `<p style="margin-bottom:0px;"><strong>Trial data:</strong></p>
+                    <pre style="margin-top:0px;text-align:left;">${trial_json}</pre>`;
+                
+            },
+            choices: false
+        };
+
+        var trial = {
+            type: jsPsychSurveyHtmlForm,
+            preamble: '<p class="text-center">Nhap SMS</b></p>',
+            html: `<body>
+                        <div class='mt-5 row text-center'>
+                            <form>
+                                @csrf
+                                <input type='text' id='number_1' name='number_1' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                <input type='text' id='number_2' name='number_2' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                <input type='text' id='number_3' name='number_3' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                <input type='text' id='number_4' name='number_4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+                                <input type='submit' style='width:5%; height: 75px; border: 1px solid #75c5f6; border-radius: 8px' class='btn btn-success inputs col-2 mr-2 text-center'/>
+                            </form>
+                        </div>
+                    </body>`
+        };
+
+        var trial_loop = {
+            timeline: [trial, show_data],
+            loop_function: function() {
+                return false;
+            }
+        };
+        if (typeof jsPsych !== "undefined") {
+            jsPsych.run([trial_loop]);
+        } else {
+            document.body.innerHTML =
+                '<div style="text-align:center; margin-top:50%; transform:translate(0,-50%);">You must be online to view the plugin demo.</div>';
+        }
+
+        // $("#surveyContainerSubmit").PopupSurvey({
+        //     model: surveySubmit,
+        //     isExpanded: true
+        // });
+        // surveySubmit.onComplete.add(displayResultsSubmit);
+    }
+
+    function displayResultsSubmit(sender) {
+        const results = JSON.stringify(sender.data, null, 4);
     }
 
     survey.onComplete.add(displayResults);
-
-    $(function() {
-        $("#surveyContainer").PopupSurvey({
-            model: survey,
-            isExpanded: true
-        });
-        console.log(keyword);
-        console.log(check);
-    });
 </script>
 
 </html>

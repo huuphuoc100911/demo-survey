@@ -1,0 +1,30 @@
+.jspsych-btn {
+    margin-bottom: 10px !important;
+}
+
+.jspsych-btn.jspsych-survey-html-form {
+    display: none !important;
+}
+
+.jspsych-html-button-response-button .jspsych-btn {
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #75c5f6;
+}
+
+.jspsych-html-button-response-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+}
+
+.input-sms {
+    width: 5%;
+    height: 75px;
+    border: 1px solid #75c5f6;
+    border-radius: 8px;
+}

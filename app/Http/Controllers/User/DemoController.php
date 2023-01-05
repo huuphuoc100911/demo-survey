@@ -11,7 +11,7 @@ class DemoController extends Controller
     public function postDemo(Request $request)
     {
         $inputs = $request->all();
-        $arr = json_decode($inputs['inputs'], true);
-        Log::info($arr);
+        // $arr = json_decode($inputs['inputs'], true);
+        Log::info($inputs);
     }
 }

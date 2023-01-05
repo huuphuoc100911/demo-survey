@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/common.js": "/js/common.js",
+    "/css/survey.css": "/css/survey.css",
     "/css/app.css": "/css/app.css",
     "/images/tick.png": "/images/tick.png",
     "/images/vendor/jquery-ui-dist/ui-icons_444444_256x240.png": "/images/vendor/jquery-ui-dist/ui-icons_444444_256x240.png",

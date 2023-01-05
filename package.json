@@ -18,7 +18,9 @@
     "dependencies": {
         "jquery": "^3.6.3",
         "jquery-ui-dist": "^1.13.2",
+        "jspsych": "^7.3.1",
         "survey-jquery": "^1.9.64",
+        "survey-knockout": "^1.9.66",
         "survey-pdf": "^1.9.65",
         "surveyjs-widgets": "^1.9.65"
     }
