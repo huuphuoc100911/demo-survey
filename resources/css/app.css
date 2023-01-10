@@ -28,3 +28,10 @@
     border: 1px solid #75c5f6;
     border-radius: 8px;
 }
+
+.input-token {
+    width: 50%;
+    height: 75px;
+    border: 1px solid #75c5f6;
+    border-radius: 8px;
+}

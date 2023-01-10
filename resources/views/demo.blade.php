@@ -777,60 +777,53 @@
         showNavigationButtons: true,
     };
 
-    const surveyJsonSubmit = {
-        title: "Customer Feedback Survey Hello",
-        pages: [{
-                elements: [{
-                    type: "comment",
-                    name: "pricelimitaaa",
-                    title: "What is your favorite?",
-                    isRequired: true,
-                }]
-            }, {
-                elements: [{
-                    type: "html",
-                    name: "input-tests",
-                    html: `<body>
-                            <div class='row text-center'>
-                                <h3 style='color:red'>Nhap SMS</h3>
-                            </div><br/>
-                            <div class='mt-5 row text-center'>
-                                <form>
-                                    @csrf
-                                    <input type='text' id='number_1' name='number_1' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
-                                    <input type='text' id='number_2' name='number_2' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
-                                    <input type='text' id='number_3' name='number_3' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
-                                    <input type='text' id='number_4' name='number_4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
-                                    <input type='submit' style='width:15%; height: 75px; border: 1px solid #75c5f6; border-radius: 8px' class='btn btn-success inputs col-2 mr-2 text-center'/>
-                                </form>
-                            </div>
-                        </body>`
-                }]
-            },
-            // {
-            //     elements: [{
-            //         type: "html",
-            //         name: "info",
-            //         html: "<table style='margin: 0px auto'><body><row><td><img src='/images/tick.png' width='100px' /></td><td style='padding:20px'>Thank you for your feedback!</td></row></body></table>"
-            //     }]
-            // }
-        ],
-        showQuestionNumbers: "on",
-        pagePrevText: "Back",
-        pageNextText: "Next",
-        completeText: "Complete",
-        showPrevButton: true,
-        firstPageIsStarted: true,
-        startSurveyText: "Submit",
-        completedHtml: "Thank you for your feedback!",
-        surveyShowDataSaving: true,
-        showProgressBar: "bottom",
-        goNextPageAutomatic: false,
-        showNavigationButtons: true,
-    };
+    // const surveyJsonSubmit = {
+    //     title: "Customer Feedback Survey Hello",
+    //     pages: [{
+    //             elements: [{
+    //                 type: "comment",
+    //                 name: "pricelimitaaa",
+    //                 title: "What is your favorite?",
+    //                 isRequired: true,
+    //             }]
+    //         }, {
+    //             elements: [{
+    //                 type: "html",
+    //                 name: "input-tests",
+    //                 html: `<body>
+    //                         <div class='row text-center'>
+    //                             <h3 style='color:red'>Nhap SMS</h3>
+    //                         </div><br/>
+    //                         <div class='mt-5 row text-center'>
+    //                             <form>
+    //                                 @csrf
+    //                                 <input type='text' id='number_1' name='number_1' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+    //                                 <input type='text' id='number_2' name='number_2' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+    //                                 <input type='text' id='number_3' name='number_3' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+    //                                 <input type='text' id='number_4' name='number_4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1')" class='input-sms inputs col-2 mr-2 text-center'/>
+    //                                 <input type='submit' style='width:15%; height: 75px; border: 1px solid #75c5f6; border-radius: 8px' class='btn btn-success inputs col-2 mr-2 text-center'/>
+    //                             </form>
+    //                         </div>
+    //                     </body>`
+    //             }]
+    //         },
+    //     ],
+    //     showQuestionNumbers: "on",
+    //     pagePrevText: "Back",
+    //     pageNextText: "Next",
+    //     completeText: "Complete",
+    //     showPrevButton: true,
+    //     firstPageIsStarted: true,
+    //     startSurveyText: "Submit",
+    //     completedHtml: "Thank you for your feedback!",
+    //     surveyShowDataSaving: true,
+    //     showProgressBar: "bottom",
+    //     goNextPageAutomatic: false,
+    //     showNavigationButtons: true,
+    // };
 
     const survey = new Survey.Model(surveyJson);
-    const surveySubmit = new Survey.Model(surveyJsonSubmit);
+    // const surveySubmit = new Survey.Model(surveyJsonSubmit);
 
     survey.locale = "ja";
 
@@ -855,9 +848,52 @@
             stimulus: function() {
                 var trial_data = jsPsych.data.getLastTrialData().values();
                 var trial_json = JSON.stringify(trial_data, null, 2);
-                return `<p style="margin-bottom:0px;"><strong>Trial data:</strong></p>
-                    <pre style="margin-top:0px;text-align:left;">${trial_json}</pre>`;
-                
+
+                // return `<p style="margin-bottom:0px;"><strong>Trial data:</strong></p>
+                //     <pre style="margin-top:0px;text-align:left;">${trial_json}</pre>`;
+
+                var show_data_input = {
+                    type: jsPsychHtmlButtonResponse,
+                    stimulus: function() {
+                        console.log('show_data_input');
+                        var trial_data_input = jsPsychInput.data.getLastTrialData().values();
+                        var trial_json_input = JSON.stringify(trial_data_input, null, 2);
+                        return `<p style="margin-bottom:0px;"><strong>Trial data:</strong></p>
+                            <pre style="margin-top:0px;text-align:left;">${trial_json}</pre>
+                            <pre style="margin-top:0px;text-align:left;">${trial_json_input}</pre>`;
+                    },
+                    choices: false
+                };
+
+                var trialInput = {
+                    type: jsPsychSurveyHtmlForm,
+                    preamble: '<p class="text-center">Nhap input</b></p>',
+                    html: `<body>
+                        <div class='mt-5 row text-center'>
+                            <form>
+                                @csrf
+                                <input type='text' placeholder='Nhap token' id='token' name='token' class='input-token inputs col-6 mr-2 text-center'/>
+                                <input type='submit' style='width:10%; height: 75px; border: 1px solid #75c5f6; border-radius: 8px' class='btn btn-success inputs col-3 mr-2 text-center'/>
+                            </form>
+                        </div>
+                    </body>`
+                };
+
+                var trial_loop_input = {
+                    timeline: [trialInput, show_data_input],
+                    loop_function: function() {
+                        console.log('trial_loop_input');
+                        return false;
+                    }
+                };
+
+                if (typeof jsPsychInput !== "undefined") {
+                    console.log('jsPsychInput');
+                    jsPsychInput.run([trial_loop_input]);
+                } else {
+                    document.body.innerHTML =
+                        '<div style="text-align:center; margin-top:50%; transform:translate(0,-50%);">You must be online to view the plugin demo.</div>';
+                }
             },
             choices: false
         };
@@ -885,6 +921,7 @@
                 return false;
             }
         };
+
         if (typeof jsPsych !== "undefined") {
             jsPsych.run([trial_loop]);
         } else {
