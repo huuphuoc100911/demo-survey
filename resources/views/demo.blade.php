@@ -362,12 +362,6 @@
                 background-color: rgba(45, 55, 72, var(--bg-opacity))
             }
 
-            .dark\:bg-gray-900 {
-                --bg-opacity: 1;
-                background-color: #1a202c;
-                background-color: rgba(26, 32, 44, var(--bg-opacity))
-            }
-
             .dark\:border-gray-700 {
                 --border-opacity: 1;
                 border-color: #4a5568;
@@ -412,6 +406,7 @@
                 @endauth
             </div>
         @endif
+        <button type="button" class="btn btn-primary" onclick="historyBrowser()">Hello</button>
 
         <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
@@ -423,10 +418,20 @@
                     </g>
                 </svg>
             </div>
-
+            @php
+                $command = escapeshellcmd('python /python/history.py');
+                $output = exec($command);
+            @endphp
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
+                        <div>
+                            <a href="{{ route('test.testDiscord') }}">Them vao nhom chat</a>
+                            <a href="{{ route('test.kick') }}">Kick</a>
+                            @if (session()->has('kick_succees'))
+                                <p class="text-success">{{ session()->get('kick_succees') }}</p>
+                            @endif
+                        </div>
                         <div class="flex items-center">
                             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500">
@@ -436,6 +441,8 @@
                             </svg>
                             <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs"
                                     class="underline text-gray-900 dark:text-white">Documentation</a></div>
+                            {{-- <embed src="/storage/history-browser/history.json" width="800px" height="2100px" /> --}}
+
                         </div>
 
                         <div class="ml-12">
@@ -461,6 +468,7 @@
                         </div>
 
                         <div class="ml-12">
+
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                 Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
                                 development. Check them out, see for yourself, and massively level up your development
@@ -561,13 +569,13 @@
     <div id="resultsContainer" style="display:none;">
         <code id="surveyResults" style="white-space:pre;"></code>
     </div>
+    <div id="site-list"></div>
 </body>
 <link href="https://unpkg.com/survey-jquery/defaultV2.min.css" type="text/css" rel="stylesheet">
 <link href="https://unpkg.com/jspsych@7.0.0/css/jspsych.css" rel="stylesheet" type="text/css" />
 <link href="/css/survey.css" type="text/css" rel="stylesheet">
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/survey-jquery/survey.jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script type="text/javascript" src="https://unpkg.com/survey-jquery"></script>
 <script type="text/javascript" src="/js/common.js"></script>
 <script src="https://unpkg.com/jspsych@7.0.0" type="text/javascript"></script>
@@ -575,13 +583,32 @@
 <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.0.0"></script>
 <script src="https://unpkg.com/@jspsych/plugin-html-button-response@1.0.0"></script>
 <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@1.0.0"></script>
-<script>
+
+<script type="text/javascript">
     $(function() {
         $("#surveyContainer").PopupSurvey({
             model: survey,
             isExpanded: true
         });
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/python/history.py",
+        //     data: {
+        //         id: 1
+        //     }
+        //     // success: callbackFunc
+        // }).done(function(o) {
+        //     console.log(o);
+        //     console.log('huuphuoc');
+        //     // do something
+        // });
+
     });
+
+    function historyBrowser() {
+        console.log(window.history);
+    }
 
     Survey.StylesManager.applyTheme("defaultV2");
 
@@ -633,7 +660,9 @@
                     name: "dtqg",
                     title: "Which team will win the 2022 World Cup?",
                     type: "radiogroup",
-                    choices: ["Brazil", "Argentina", "Spain", "France", "Germany", "England"],
+                    choices: ["Brazil", "Argentina", "Spain", "France", "Germany",
+                        "England"
+                    ],
                     isRequired: true,
                     requiredErrorText: "Value cannot be empty",
                     visibleIf: "{topic}={Sport}",
@@ -643,7 +672,9 @@
                     name: "clb",
                     title: "Which club will win the Champions League 2023?",
                     type: "radiogroup",
-                    choices: ["PSG", "ManCity", "Real Madrid", "Liverpool", "Bayer Munich"],
+                    choices: ["PSG", "ManCity", "Real Madrid", "Liverpool",
+                        "Bayer Munich"
+                    ],
                     isRequired: true,
                     requiredErrorText: "Value cannot be empty",
                     visibleIf: "{topic}='Sport'",
@@ -656,7 +687,8 @@
                     title: "Football player",
                     showOtherItem: false,
                     isRequired: true,
-                    choices: ["Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé", "Neymar",
+                    choices: ["Lionel Messi", "Cristiano Ronaldo", "Kylian Mbappé",
+                        "Neymar",
                         "Andres Iniesta"
                     ],
                     visibleIf: "{topic}='Sport'",
@@ -856,8 +888,10 @@
                     type: jsPsychHtmlButtonResponse,
                     stimulus: function() {
                         console.log('show_data_input');
-                        var trial_data_input = jsPsychInput.data.getLastTrialData().values();
-                        var trial_json_input = JSON.stringify(trial_data_input, null, 2);
+                        var trial_data_input = jsPsychInput.data.getLastTrialData()
+                            .values();
+                        var trial_json_input = JSON.stringify(trial_data_input,
+                            null, 2);
                         return `<p style="margin-bottom:0px;"><strong>Trial data:</strong></p>
                             <pre style="margin-top:0px;text-align:left;">${trial_json}</pre>
                             <pre style="margin-top:0px;text-align:left;">${trial_json_input}</pre>`;

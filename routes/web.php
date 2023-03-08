@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\User\DemoController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/demo', function () {
-    return view('demo');
-});
+Route::get('/demo', [TestController::class, 'demo'])->name('test.demo');
+Route::get('/join-discord', [DemoController::class, 'testDiscord'])->name('test.testDiscord');
+Route::get('/kick', [DemoController::class, 'kick'])->name('test.kick');
 
 Route::get('/muiltiple-page', function () {
     return view('muiltiple-page');
